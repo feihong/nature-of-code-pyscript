@@ -20,24 +20,21 @@ app.get('/', async (c) => {
 app.get('/:chapter/', async (c) => {
   const chapter = c.req.param('chapter')
   const files = (await fs.readdir(`./src/${chapter}`))
-    .filter(f => f.endsWith('.json'))
-    .map(f => f.substring(0, f.length - 5))
   const body = '<ul>' + files.map(filename => {
-    const url = `/${chapter}/${filename}.html`
+    const url = `/${chapter}/${filename}/`
     return `<li><a href="${url}">${filename}</a></li>`
   }).join('\n') + '</ul>'
   return c.html(getHtml('Chapters', '', body))
 })
 
-app.get('/:chapter/:page{.+\.html}', async (c) => {
-  const { chapter, page } = c.req.param()
-  const name = page.substring(0, page.length - 5)
-  const jsonFile = `./src/${chapter}/${name}.json`
+app.get('/:chapter/:example/', async (c) => {
+  const { chapter, example } = c.req.param()
+  const jsonFile = `./src/${chapter}/${example}/config.json`
   const config = JSON.parse(await Bun.file(jsonFile).text())
   const head = `<link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css">
     <script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
     <script src="https://q5js.org/q5.js"></script>`
-  const body = `<script type="py" src="./${name}.py" config="./${name}.json"></script>
+  const body = `<script type="py" src="./main.py" config="./config.json"></script>
     <div id="sketch"></div>`
   return c.html(getHtml(config.name, head, body))
 })
@@ -64,17 +61,20 @@ function getHtml(title : string, head : string, body : string) : string {
     /* https://www.swyx.io/css-100-bytes */
     html {
       max-width: 70ch;
-      padding: 3em 1em;
-      margin: auto;
-      line-height: 1.75;
+      line-height: 1.25;
       font-size: 1.25em;
+    }
+    main {
+      padding: 0 1em;
     }
   </style>
   ${head}
 </head>
 <body>
-  <h1>${title}</h1>
-  ${body}
+  <main>
+    <h1>${title}</h1>
+    ${body}
+  </main>
 </body>
 </html>`
 }
