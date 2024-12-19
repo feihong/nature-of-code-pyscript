@@ -24,7 +24,7 @@ app.get('/:chapter/', async (c) => {
     const url = `/${chapter}/${filename}/`
     return `<li><a href="${url}">${filename}</a></li>`
   }).join('\n') + '</ul>'
-  return c.html(getHtml('Chapters', '', body))
+  return c.html(getHtml(chapter, '', body))
 })
 
 app.get('/:chapter/:example/', async (c) => {
@@ -66,6 +66,9 @@ function getHtml(title : string, head : string, body : string) : string {
     }
     main {
       padding: 0 1em;
+    }
+    canvas {
+      border: 1px solid lightgray;
     }
   </style>
   ${head}
