@@ -10,7 +10,7 @@ def setup():
 def draw():
     s.background(255)
 
-    index = random.randint(0, total - 1)
+    index = random.randrange(0, total)
     random_counts[index] += 1
 
     s.stroke(0)
