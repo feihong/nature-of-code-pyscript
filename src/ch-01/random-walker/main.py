@@ -7,8 +7,8 @@ class Walker:
         self.y = 0
 
     def show(self):
-        s.stroke(0)
-        s.point(self.x, self.y)
+        stroke(0)
+        point(self.x, self.y)
 
     def step(self):
         match random.randint(0, 3):
@@ -24,8 +24,8 @@ class Walker:
 walker = Walker()
 
 def setup():
-    s.createCanvas(640, 240)
-    s.background(245)
+    createCanvas(640, 240)
+    background(245)
     walker.x = s.width / 2
     walker.y = s.height / 2
 
@@ -34,3 +34,4 @@ def draw():
     walker.show()
 
 s = q5.init('sketch')
+from q5 import *
