@@ -53,5 +53,4 @@ def draw():
     walker.step()
     walker.show()
 
-s = q5.init('sketch')
-from q5 import *
+q5.init(var='s', id='sketch')

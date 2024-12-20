@@ -10,7 +10,7 @@ preload
 setup
 """.strip().splitlines()
 
-# These functions will be injected into this module
+# These functions will be injected into the parent frame
 _inject_functions = """
 background
 circle

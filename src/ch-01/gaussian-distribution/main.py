@@ -11,5 +11,4 @@ def draw():
     fill(0, 10)
     circle(x, 120, 16)
 
-s = q5.init('sketch')
-from q5 import *
+q5.init(var='s', id='sketch')

@@ -21,5 +21,4 @@ def draw():
         h = random_counts[i]
         rect(i * w, s.height - h, w - 1, h)
 
-s = q5.init('sketch')
-from q5 import *
+q5.init(var='s', id='sketch')
