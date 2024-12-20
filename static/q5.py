@@ -4,9 +4,9 @@ import pyscript
 
 # These functions should be attached to the q5 instance
 _instance_functions = """
+draw
 preload
 setup
-draw
 """.strip().splitlines()
 
 # These functions will be injected into this module

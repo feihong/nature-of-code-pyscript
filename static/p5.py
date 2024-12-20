@@ -1,29 +1,40 @@
 import sys
-from pyscript import ffi, js_import
+from pyscript import document
 import js
 
-js.eval("""
-window.__attach = (name, fn) => window[name] = fn
-""")
-
-# These functions should be attached to global scope
-_global_functions = """
+# These functions should be attached to the instance
+_instance_functions = """
+draw
+mousePressed
 preload
 setup
-draw
 """.strip().splitlines()
 
-# Just an alias for globalThis
-sketch = js
+# These functions will be injected into this module
+_inject_functions = """
+background
+circle
+createCanvas
+fill
+noStroke
+point
+rect
+stroke
+""".strip().splitlines()
 
-async def init(id):
+def init(var, id):
     locals = sys._getframe(1).f_locals
 
-    for name in _global_functions:
-        if name in locals:
-            # You must use ffi.create_proxy otherwise the function gets destroyed
-            js.__attach(name, ffi.create_proxy(locals[name]))
+    def callback(instance):
+        # Assign value of instance to variable in parent frame
+        locals[var] = instance
 
-    # Load p5 library, which will start in global mode because it sees that setup
-    # and draw functions are in globalThis
-    await js_import('https://cdn.jsdelivr.net/npm/p5@1.11.2/lib/p5.min.js')
+        for name in _inject_functions:
+            locals[name] = getattr(instance, name)
+
+        for name in _instance_functions:
+            if name in locals:
+                setattr(instance, name, locals[name])
+
+    return js.p5.new(callback, document.getElementById(id))
+

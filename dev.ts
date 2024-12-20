@@ -31,11 +31,14 @@ app.get('/:chapter/:example/', async (c) => {
   const { chapter, example } = c.req.param()
   const jsonFile = `./src/${chapter}/${example}/config.json`
   const config = JSON.parse(await Bun.file(jsonFile).text())
-  const head = `<link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css">
-    <script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
-    <script src="https://q5js.org/q5.js"></script>`
-  const body = `<script type="py" src="./main.py" config="./config.json"></script>
+  const head1 = `<link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css">
+    <script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>`
+  const head = head1 + ('/static/q5.py' in config.files
+    ? '<script src="https://q5js.org/q5.js"></script>'
+    : '<script src="https://cdn.jsdelivr.net/npm/p5@1.11.2/lib/p5.min.js"></script')
+  const body1 = `<script type="py" src="./main.py" config="./config.json"></script>
     <div id="sketch"></div>`
+  const body = body1 + (config.desc ? `<p>${config.desc}</p>` : '')
   return c.html(getHtml(config.name, head, body))
 })
 

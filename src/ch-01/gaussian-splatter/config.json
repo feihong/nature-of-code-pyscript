@@ -1,0 +1,7 @@
+{
+  "name": "Gaussian Splatter",
+  "desc": "Exercise 0.4: Consider a simulation of paint splatter drawn as a collection of colored dots. Most of the paint clusters around a central position, but some dots splatter out toward the edges. Can you use a normal distribution of random numbers to generate the positions of the dots? Can you also use a normal distribution of random numbers to generate a color palette? Try creating a slider to adjust the standard deviation.",
+  "files": {
+    "/static/p5.py": ""
+  }
+}
