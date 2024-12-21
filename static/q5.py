@@ -11,8 +11,12 @@ setup
 
 # These functions will be injected into the parent frame
 _inject_functions = """
+OKLCH
+RGB
+SRGB
 background
 circle
+colorMode
 createCanvas
 fill
 noStroke
