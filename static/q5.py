@@ -11,18 +11,58 @@ setup
 
 # These functions will be injected into the parent frame
 _inject_functions = """
+BASELINE
+BEVEL
+BOTTOM
+CENTER
+CLOSE
+CORNER
+CORNERS
+DEGREES
+HALF_PI
+LEFT
+MITER
 OKLCH
+PI
+QUARTER_PI
+RADIANS
+RADIUS
 RGB
+RIGHT
+ROUND
+SQUARE
 SRGB
+TOP
+TWO_PI
+angleMode
+arc
 background
+beginShape
 circle
 colorMode
 createCanvas
+ellipse
+ellipseMode
+endShape
 fill
+line
+noFill
+noLoop
 noStroke
 point
+quad
+radians
 rect
+resizeCanvas
 stroke
+strokeCap
+strokeJoin
+strokeWeight
+text
+textAlign
+textSize
+triangle
+vertex
 """.strip().splitlines()
 
 def init(var, id):
