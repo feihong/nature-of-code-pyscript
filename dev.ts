@@ -1,5 +1,4 @@
-import * as fs from "node:fs/promises"
-import toml from 'toml'
+import * as fs from 'node:fs/promises'
 import { Hono } from 'hono'
 import { serveStatic } from 'hono/bun'
 
@@ -12,19 +11,8 @@ const mimes = {
 app.use('/static/*', serveStatic({ root: './', mimes }))
 
 app.get('/', async (c) => {
-  const files = await fs.readdir('./src')
-  const body = '<ul>' + files.map(f => `<li><a href="/${f}/">${f}</a></li>`).join('\n') + '</ul>'
-  return c.html(getHtml('Chapters', '', body))
-})
-
-app.get('/:chapter/', async (c) => {
-  const chapter = c.req.param('chapter')
-  const files = (await fs.readdir(`./src/${chapter}`))
-  const body = '<ul>' + files.map(filename => {
-    const url = `/${chapter}/${filename}/`
-    return `<li><a href="${url}">${filename}</a></li>`
-  }).join('\n') + '</ul>'
-  return c.html(getHtml(chapter, '', body))
+  const body = '<ul>' + (await fs.readdir('./src')).map(f => `<li><a href="/${f}/">${f}</a></li>`).join('\n') + '</ul>'
+  return c.html(getHtml('Home', '', body))
 })
 
 const py2jsMap = {
@@ -32,22 +20,31 @@ const py2jsMap = {
   '/static/p5.py': 'https://cdn.jsdelivr.net/npm/p5@1.11.2/lib/p5.min.js',
 }
 
-app.get('/:chapter/:example/', async (c) => {
-  const { chapter, example } = c.req.param()
-  const jsonFile = `./src/${chapter}/${example}/config.json`
-  const config = JSON.parse(await Bun.file(jsonFile).text())
-  const pyscript = `<link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css">
-    <script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>`
-  console.log(config.files)
-  const scripts = Object.keys(config.files)
-    .filter(f => py2jsMap[f])
-    .map(f => `<script src="${py2jsMap[f]}"></script>`)
-    .join('\n')
-  const head = pyscript + scripts
-  const body1 = `<script type="py" src="./main.py" config="./config.json"></script>
-    <div id="sketch"></div>`
-  const body = body1 + (config.desc ? `<p>${config.desc}</p>` : '')
-  return c.html(getHtml(config.name, head, body))
+app.get('/:path{.+/}', async (c) => {
+  const path = c.req.path
+  const realPath = './src/' + path
+  const configFile = Bun.file(realPath + 'config.json')
+  if (!await configFile.exists()) {
+    const files = (await fs.readdir(`./src/${path}`))
+    const body = '<ul>' + files.map(filename => {
+      const url = `${path}${filename}` + (filename.includes('.') ? '' : '/')
+      return `<li><a href="${url}">${filename}</a></li>`
+    }).join('\n') + '</ul>'
+    return c.html(getHtml(path, '', body))
+  } else {
+    const config = JSON.parse(await configFile.text())
+    const pyscript = `<link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css">
+      <script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>`
+    const scripts = Object.keys(config.files)
+      .filter(f => py2jsMap[f])
+      .map(f => `<script src="${py2jsMap[f]}"></script>`)
+      .join('\n')
+    const head = pyscript + scripts
+    const body1 = `<script type="py" src="./main.py" config="./config.json"></script>
+      <div id="sketch"></div>`
+    const body = body1 + (config.desc ? `<p>${config.desc}</p>` : '')
+    return c.html(getHtml(config.name, head, body))
+  }
 })
 
 app.get(

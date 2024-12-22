@@ -2,4 +2,9 @@
 
 ## Todo
 
-- Add polyfill for millis function for q5
+- Convert most examples to p5
+- Reorganize folders
+- Rename to creative-pyscript
+- Add first svg example
+- Generate static site
+- Add deploy script
