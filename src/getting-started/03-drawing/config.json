@@ -2,6 +2,6 @@
   "name": "Basic drawing examples",
   "desc": "From the Drawing chapter of 'Getting Started with p5.js'",
   "files": {
-    "/static/q5.py": ""
+    "/static/p5.py": ""
   }
 }

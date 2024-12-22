@@ -1,18 +1,26 @@
 from pyscript import document, when
 from pyscript.web import page, div, select, option
-import q5
+import p5
 
 get_choice = lambda: document.location.hash[1:].replace('%20', ' ')
 
-def setup():
+def reset():
     if get_choice() == 'robot':
         resizeCanvas(720, 480)
     else:
         resizeCanvas(480, 120)
 
-def draw():
     background(204)
+    fill(255)
+    stroke(0)
+    strokeWeight(1)
+    ellipseMode(CENTER)
+    loop()
 
+def setup():
+    reset()
+
+def draw():
     match get_choice():
         case 'line':
             line(20, 50, 420, 110)
@@ -45,8 +53,6 @@ def draw():
             ellipse(279, 60, 90, 90)
             strokeWeight(20)  # Stroke weight to 20 pixels
             ellipse(389, 60, 90, 90)
-
-            strokeWeight(1)
         case 'strokeJoin strokeCap':
             strokeWeight(12)
             strokeJoin(ROUND)      # Round the stroke corners
@@ -57,8 +63,6 @@ def draw():
             line(270, 25, 340, 95)
             strokeCap(ROUND)       # Round the line endings
             line(350, 25, 420, 95)
-
-            strokeWeight(1)
         case 'grays':
             background(0)                # Black
             fill(204)                    # Light gray
@@ -67,8 +71,6 @@ def draw():
             ellipse(228, -16, 200, 200)  # Medium gray circle
             fill(102)                    # Dark gray
             ellipse(268, 118, 200, 200)  # Dark gray circle
-
-            fill(0)
         case 'noFill noStroke':
             fill(153)                    # Medium gray
             ellipse(132, 82, 200, 200)   # Gray circle
@@ -76,9 +78,6 @@ def draw():
             ellipse(228, -16, 200, 200)  # Outline circle
             noStroke()                   # Turn off stroke
             ellipse(268, 118, 200, 200)  # Doesn’t draw!
-
-            fill(0)
-            stroke(0)
         case 'color':
             background(40, 50, 100)        # Dark blue color
             fill(255, 0, 0)              # Red color
@@ -87,8 +86,6 @@ def draw():
             ellipse(228, -16, 200, 200)  # Green circle
             fill(0, 0, 255)              # Blue color
             ellipse(268, 118, 200, 200)  # Blue circle
-
-            fill(0)
         case 'transparency':
             noStroke()
             background(204, 226, 225)    # Light blue color
@@ -98,9 +95,6 @@ def draw():
             ellipse(228, -16, 200, 200)  # Green circle
             fill(0, 0, 255, 160)         # Blue color
             ellipse(268, 118, 200, 200)  # Blue circle
-
-            fill(0)
-            stroke(0)
         case 'arrow':
             beginShape()
             vertex(180, 82)
@@ -178,18 +172,15 @@ def draw():
             ellipse(263, 148, 5, 5)    # Small eye 1
             ellipse(296, 130, 4, 4)    # Small eye 2
             ellipse(305, 162, 3, 3)    # Small eye 3
-
-            # Reset
-            fill(0)
-            stroke(0)
-            strokeWeight(1)
-            ellipseMode(CENTER)
         case _:
+          fill(0)
           textAlign(CENTER, CENTER)
           textSize(40)
           text('你好世界！', s.width / 2, s.height / 2)
 
-q5.init(var='s', id='sketch')
+    noLoop()
+
+p5.init(var='s', id='sketch')
 
 sketch = page.find('#sketch')[0]
 choices = ('hello|line|shapes|rectangle|ellipse|arc|angleMode|strokeWeight|strokeJoin strokeCap|grays|noFill noStroke'
@@ -204,7 +195,4 @@ sketch.append(
 def change(event):
     new_choice = event.target.value
     document.location.hash = '#' + new_choice
-    if new_choice == 'robot':
-        resizeCanvas(720, 480)
-    else:
-        resizeCanvas(480, 120)
+    reset()
