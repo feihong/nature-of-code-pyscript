@@ -27,15 +27,23 @@ app.get('/:chapter/', async (c) => {
   return c.html(getHtml(chapter, '', body))
 })
 
+const py2jsMap = {
+  '/static/q5.py': 'https://q5js.org/q5.js',
+  '/static/p5.py': 'https://cdn.jsdelivr.net/npm/p5@1.11.2/lib/p5.min.js',
+}
+
 app.get('/:chapter/:example/', async (c) => {
   const { chapter, example } = c.req.param()
   const jsonFile = `./src/${chapter}/${example}/config.json`
   const config = JSON.parse(await Bun.file(jsonFile).text())
-  const head1 = `<link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css">
+  const pyscript = `<link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css">
     <script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>`
-  const head = head1 + ('/static/q5.py' in config.files
-    ? '<script src="https://q5js.org/q5.js"></script>'
-    : '<script src="https://cdn.jsdelivr.net/npm/p5@1.11.2/lib/p5.min.js"></script')
+  console.log(config.files)
+  const scripts = Object.keys(config.files)
+    .filter(f => py2jsMap[f])
+    .map(f => `<script src="${py2jsMap[f]}"></script>`)
+    .join('\n')
+  const head = pyscript + scripts
   const body1 = `<script type="py" src="./main.py" config="./config.json"></script>
     <div id="sketch"></div>`
   const body = body1 + (config.desc ? `<p>${config.desc}</p>` : '')
