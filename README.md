@@ -5,6 +5,10 @@
 - Convert most examples to p5
 - Reorganize folders
 - Rename to creative-pyscript
-- Add first svg example
 - Generate static site
 - Add deploy script
+
+## Links
+
+- https://github.com/pyscript/pyscript/blob/main/core/src/stdlib/pyscript/web.py
+- https://davidmatthew.ie/generative-art-javascript-svg/
