@@ -1,6 +1,6 @@
 import random
 from pyscript import window, when
-from pyscript.web import wrap_dom_element, page, h2, button, div
+from pyscript.web import page, h2, div
 from sv import svg, circle, rect, ellipse
 
 def hilma():
@@ -43,8 +43,14 @@ sketch.append(
     div(loops(), id='loops'),
 )
 
-@when('keypress', 'html')
-def click(_event):
+def regenerate():
     dv = page.find('#loops')[0]
     dv.innerHTML = ''
     dv.append(loops())
+
+@when('keypress', 'html')
+def keypress(_event): regenerate()
+
+@when('click', '#loops')
+def click(_event): regenerate()
+

@@ -89,3 +89,6 @@ class rect(SvgElement):
 
 class ellipse(SvgElement):
   """Ref: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/ellipse"""
+
+class g(SvgContainerElement):
+  """Ref: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/g"""
