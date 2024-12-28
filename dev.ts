@@ -71,8 +71,6 @@ function getHtml(title : string, head : string, body : string) : string {
       max-width: 70ch;
       line-height: 1.25;
       font-size: 1.25em;
-    }
-    main {
       padding: 0 1em;
     }
     canvas {

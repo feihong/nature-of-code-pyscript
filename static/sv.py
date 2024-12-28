@@ -1,5 +1,6 @@
+import contextlib
 from pyscript import document
-from pyscript.web import Element, Classes, Style
+from pyscript.web import Element, Classes, Style, page, h2, div
 
 class SvgElement(Element):
     def __init__(self, dom_element=None, classes=None, style=None, **kwargs):
@@ -92,3 +93,17 @@ class ellipse(SvgElement):
 
 class g(SvgContainerElement):
   """Ref: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/g"""
+
+def add_sketch(title, selector=None):
+    def decorator(func):
+        element = page.find(selector)[0] if selector else page
+        element.append(h2(title), func())
+        return func
+
+    return decorator
+
+def add_class_sketch(cls):
+    element = page.find(cls.selector)[0] if hasattr(cls, 'selector') else page
+    sketch = cls()
+    element.append(h2(cls.title), sketch.render())
+    return cls

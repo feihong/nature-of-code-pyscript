@@ -2,7 +2,7 @@ import itertools
 import math
 from pyscript import window
 from pyscript.web import page, h2
-from sv import svg, rect, circle, g
+from sv import svg, rect, circle
 
 def circles():
     steps = ['00', '33', '66', '99', 'CC', 'FF']
@@ -28,6 +28,6 @@ sketch.append(
     h2('Web-safe color spiral'),
     svg(width=size, height=size, viewBox='0 0 1000 1000', children=[
         rect(x=0, y=0, width=1000, height=1000, fill='#181818'),
-        g(*circles())
+        *circles(),
     ])
 )
