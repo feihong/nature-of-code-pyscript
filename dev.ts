@@ -26,6 +26,7 @@ app.get('/:path{.+/}', async (c) => {
   const configFile = Bun.file(realPath + 'config.json')
   if (!await configFile.exists()) {
     const files = (await fs.readdir(`./src/${path}`))
+    files.sort()
     const body = '<ul>' + files.map(filename => {
       const url = `${path}${filename}` + (filename.includes('.') ? '' : '/')
       return `<li><a href="${url}">${filename}</a></li>`

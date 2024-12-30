@@ -1,8 +1,7 @@
 import itertools
 import math
 from pyscript import window
-from pyscript.web import page, h2
-from sv import svg, rect, circle
+from sv import add_sketch, svg, rect, circle
 
 def circles():
     steps = ['00', '33', '66', '99', 'CC', 'FF']
@@ -21,13 +20,10 @@ def circles():
             transform='translate(500, 500)',
             fill=web_safe_color)
 
-size = window.innerWidth if window.innerWidth < window.innerHeight else window.innerHeight
-
-sketch = page.find('#sketch')[0]
-sketch.append(
-    h2('Web-safe color spiral'),
-    svg(width=size, height=size, viewBox='0 0 1000 1000', children=[
+@add_sketch('Web-safe color spiral')
+def color_spiral():
+    size = window.innerWidth if window.innerWidth < window.innerHeight else window.innerHeight
+    return svg(width=size, height=size, viewBox='0 0 1000 1000', children=[
         rect(x=0, y=0, width=1000, height=1000, fill='#181818'),
         *circles(),
     ])
-)

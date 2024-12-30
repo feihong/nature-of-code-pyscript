@@ -1,6 +1,5 @@
-import contextlib
 from pyscript import document
-from pyscript.web import Element, Classes, Style, page, h2, div
+from pyscript.web import Element, ElementCollection, Classes, Style, page, h2
 
 class SvgElement(Element):
     def __init__(self, dom_element=None, classes=None, style=None, **kwargs):
@@ -57,6 +56,9 @@ class SvgElement(Element):
                 # user is setting them directly.
                 self._on_events[name] = value
 
+            # Some SVG element attributes are hyphenated
+            name = name.replace('_', '-')
+
             self._dom_element.setAttributeNS(None, name, value)
 
 class SvgContainerElement(SvgElement):
@@ -78,6 +80,7 @@ class SvgContainerElement(SvgElement):
     def __iter__(self):
         yield from self.children
 
+# SVG elements
 
 class svg(SvgContainerElement):
   """Ref: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg"""
@@ -85,14 +88,25 @@ class svg(SvgContainerElement):
 class circle(SvgElement):
   """Ref: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/circle"""
 
-class rect(SvgElement):
-  """Ref: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/rect"""
+class defs(SvgContainerElement):
+  """Ref: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/defs"""
 
 class ellipse(SvgElement):
   """Ref: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/ellipse"""
 
 class g(SvgContainerElement):
   """Ref: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/g"""
+
+class pattern(SvgContainerElement):
+  """Ref: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/pattern"""
+
+class rect(SvgElement):
+  """Ref: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/rect"""
+
+class text(SvgContainerElement):
+  """Ref: https://developer.mozilla.org/en-US/docs/Web/SVG/Element/text"""
+
+# Helper functions
 
 def add_sketch(title, selector=None):
     def decorator(func):
