@@ -1,7 +1,6 @@
 {
-  "name": "Basic drawing examples",
-  "desc": "From the Drawing chapter of 'Getting Started with p5.js'",
+  "name": "3. Drawing",
   "files": {
-    "/static/p5.py": ""
+    "/static/p5i.py": ""
   }
 }

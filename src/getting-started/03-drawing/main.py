@@ -1,198 +1,270 @@
-from pyscript import document, when
-from pyscript.web import page, div, select, option
-import p5
+from pyscript.web import page, h2, div
+from p5i import add_sketch
 
-get_choice = lambda: document.location.hash[1:].replace('%20', ' ')
+@add_sketch
+class line:
+    title = None
 
-def reset():
-    if get_choice() == 'robot':
-        resizeCanvas(720, 480)
-    else:
-        resizeCanvas(480, 120)
+    def setup(s):
+        s.createCanvas(480, 120)
+        s.background(204)
 
-    background(204)
-    fill(255)
-    stroke(0)
-    strokeWeight(1)
-    ellipseMode(CENTER)
-    loop()
+    def draw(s):
+        s.line(20, 50, 420, 110)
+        s.noLoop()
 
-def setup():
-    reset()
+@add_sketch
+class shapes:
+    title = 'quad and triangle'
 
-def draw():
-    match get_choice():
-        case 'line':
-            line(20, 50, 420, 110)
-        case 'shapes':
-            quad(158, 55, 199, 14, 392, 66, 351, 107)
-            triangle(347, 54, 392, 9, 392, 66)
-            triangle(158, 55, 290, 91, 290, 112)
-        case 'rectangle':
-            rect(180, 60, 220, 40)
-        case 'ellipse':
-            ellipse(278, -100, 400, 400)
-            ellipse(120, 100, 110, 110)
-            ellipse(412, 60, 18, 18)
-        case 'arc':
-            arc(90, 60, 80, 80, 0, HALF_PI)
-            arc(190, 60, 80, 80, 0, PI+HALF_PI)
-            arc(290, 60, 80, 80, PI, TWO_PI+HALF_PI)
-            arc(390, 60, 80, 80, QUARTER_PI, PI+QUARTER_PI)
-        case 'angleMode':
-            angleMode(DEGREES)
-            arc(90, 60, 80, 80, 0, 90)
-            arc(190, 60, 80, 80, 0, 270)
-            arc(290, 60, 80, 80, 180, 450)
-            arc(390, 60, 80, 80, 45, 225)
-            angleMode(RADIANS)
-        case 'strokeWeight':
-            ellipse(75, 60, 90, 90)
-            strokeWeight(8)   # Stroke weight to 8 pixels
-            ellipse(175, 60, 90, 90)
-            ellipse(279, 60, 90, 90)
-            strokeWeight(20)  # Stroke weight to 20 pixels
-            ellipse(389, 60, 90, 90)
-        case 'strokeJoin strokeCap':
-            strokeWeight(12)
-            strokeJoin(ROUND)      # Round the stroke corners
-            rect(40, 25, 70, 70)
-            strokeJoin(BEVEL)      # Bevel the stroke corners
-            rect(140, 25, 70, 70)
-            strokeCap(SQUARE)      # Square the line endings
-            line(270, 25, 340, 95)
-            strokeCap(ROUND)       # Round the line endings
-            line(350, 25, 420, 95)
-        case 'grays':
-            background(0)                # Black
-            fill(204)                    # Light gray
-            ellipse(132, 82, 200, 200)   # Light gray circle
-            fill(153)                    # Medium gray
-            ellipse(228, -16, 200, 200)  # Medium gray circle
-            fill(102)                    # Dark gray
-            ellipse(268, 118, 200, 200)  # Dark gray circle
-        case 'noFill noStroke':
-            fill(153)                    # Medium gray
-            ellipse(132, 82, 200, 200)   # Gray circle
-            noFill()                     # Turn off fill
-            ellipse(228, -16, 200, 200)  # Outline circle
-            noStroke()                   # Turn off stroke
-            ellipse(268, 118, 200, 200)  # Doesn’t draw!
-        case 'color':
-            background(40, 50, 100)        # Dark blue color
-            fill(255, 0, 0)              # Red color
-            ellipse(132, 82, 200, 200)   # Red circle
-            fill(0, 255, 0)              # Green color
-            ellipse(228, -16, 200, 200)  # Green circle
-            fill(0, 0, 255)              # Blue color
-            ellipse(268, 118, 200, 200)  # Blue circle
-        case 'transparency':
-            noStroke()
-            background(204, 226, 225)    # Light blue color
-            fill(255, 0, 0, 160)         # Red color
-            ellipse(132, 82, 200, 200)   # Red circle
-            fill(0, 255, 0, 160)         # Green color
-            ellipse(228, -16, 200, 200)  # Green circle
-            fill(0, 0, 255, 160)         # Blue color
-            ellipse(268, 118, 200, 200)  # Blue circle
-        case 'arrow':
-            beginShape()
-            vertex(180, 82)
-            vertex(207, 36)
-            vertex(214, 63)
-            vertex(407, 11)
-            vertex(412, 30)
-            vertex(219, 82)
-            vertex(226, 109)
-            endShape(CLOSE)
-        case 'creatures':
-            # Left creature
-            fill(255)
-            beginShape()
-            vertex(50, 120)
-            vertex(100, 90)
-            vertex(110, 60)
-            vertex(80, 20)
-            vertex(210, 60)
-            vertex(160, 80)
-            vertex(200, 90)
-            vertex(140, 100)
-            vertex(130, 120)
-            endShape()
-            fill(0)
-            ellipse(155, 60, 8, 8)
+    def setup(s):
+        s.createCanvas(480, 120)
+        s.background(204)
+        s.quad(158, 55, 199, 14, 392, 66, 351, 107)
+        s.triangle(347, 54, 392, 9, 392, 66)
+        s.triangle(158, 55, 290, 91, 290, 112)
+        s.noLoop()
 
-            # Right creature
-            fill(255)
-            beginShape()
-            vertex(370, 120)
-            vertex(360, 90)
-            vertex(290, 80)
-            vertex(340, 70)
-            vertex(280, 50)
-            vertex(420, 10)
-            vertex(390, 50)
-            vertex(410, 90)
-            vertex(460, 120)
-            endShape()
-            fill(0)
-            ellipse(345, 50, 10, 10)
-        case 'robot':
-            strokeWeight(2)
-            ellipseMode(RADIUS)
+@add_sketch
+class rect:
+    title = None
 
-            # Neck
-            stroke(102)                # Set stroke to gray
-            line(266, 257, 266, 162)   # Left
-            line(276, 257, 276, 162)   # Middle
-            line(286, 257, 286, 162)   # Right
+    def setup(s):
+        s.createCanvas(480, 120)
+        s.background(204)
+        s.rect(180, 60, 220, 40)
+        s.noLoop()
 
-            # Antennae
-            line(276, 155, 246, 112)   # Small
-            line(276, 155, 306, 56)    # Tall
-            line(276, 155, 342, 170)   # Medium
+@add_sketch
+class ellipse:
+    title = None
 
-            # Body
-            noStroke()                 # Disable stroke
-            fill(102)                  # Set fill to gray
-            ellipse(264, 377, 33, 33)  # Antigravity orb
-            fill(0)                    # Set fill to black
-            rect(219, 257, 90, 120)    # Main body
-            fill(102)                  # Set fill to gray
-            rect(219, 274, 90, 6)      # Gray stripe
+    def setup(s):
+        s.createCanvas(480, 120)
+        s.background(204)
+        s.ellipse(278, -100, 400, 400)
+        s.ellipse(120, 100, 110, 110)
+        s.ellipse(412, 60, 18, 18)
+        s.noLoop()
 
-            # Head
-            fill(0)                    # Set fill to black
-            ellipse(276, 155, 45, 45)  # Head
-            fill(255)                  # Set fill to white
-            ellipse(288, 150, 14, 14)  # Large eye
-            fill(0)                    # Set fill to black
-            ellipse(288, 150, 3, 3)    # Pupil
-            fill(153)                  # Set fill to light gray
-            ellipse(263, 148, 5, 5)    # Small eye 1
-            ellipse(296, 130, 4, 4)    # Small eye 2
-            ellipse(305, 162, 3, 3)    # Small eye 3
-        case _:
-          fill(0)
-          textAlign(CENTER, CENTER)
-          textSize(40)
-          text('你好世界！', s.width / 2, s.height / 2)
+@add_sketch
+class arc:
+    title = None
 
-    noLoop()
+    def setup(s):
+        s.createCanvas(480, 120)
+        s.background(204)
+        s.arc(90, 60, 80, 80, 0, s.HALF_PI)
+        s.arc(190, 60, 80, 80, 0, s.PI + s.HALF_PI)
+        s.arc(290, 60, 80, 80, s.PI, s.TWO_PI + s.HALF_PI)
+        s.arc(390, 60, 80, 80, s.QUARTER_PI, s.PI + s.QUARTER_PI)
+        s.noLoop()
 
-p5.init(var='s', id='sketch')
+@add_sketch
+class angleMode:
+    title = None
 
-sketch = page.find('#sketch')[0]
-choices = ('hello|line|shapes|rectangle|ellipse|arc|angleMode|strokeWeight|strokeJoin strokeCap|grays|noFill noStroke'
-  '|color|transparency|arrow|creatures|robot').split('|')
-sketch.append(
-   div(
-      select(id='choices', *(option(s, value=s, selected=get_choice()==s) for s in choices))
-   )
-)
+    def setup(s):
+        s.createCanvas(480, 120)
+        s.background(204)
+        s.angleMode(s.DEGREES)
+        s.arc(90, 60, 80, 80, 0, 90)
+        s.arc(190, 60, 80, 80, 0, 270)
+        s.arc(290, 60, 80, 80, 180, 450)
+        s.arc(390, 60, 80, 80, 45, 225)
+        s.noLoop()
 
-@when('change', '#choices')
-def change(event):
-    new_choice = event.target.value
-    document.location.hash = '#' + new_choice
-    reset()
+@add_sketch
+class strokeWeight:
+    title = None
+
+    def setup(s):
+        s.createCanvas(480, 120)
+        s.background(204)
+        s.ellipse(75, 60, 90, 90)
+        s.strokeWeight(8)   # Stroke weight to 8 pixels
+        s.ellipse(175, 60, 90, 90)
+        s.ellipse(279, 60, 90, 90)
+        s.strokeWeight(20)  # Stroke weight to 20 pixels
+        s.ellipse(389, 60, 90, 90)
+        s.noLoop()
+
+@add_sketch
+class strokeJoin:
+    title = 'strokeJoin and strokeCap'
+
+    def setup(s):
+        s.createCanvas(480, 120)
+        s.background(204)
+        s.strokeWeight(12)
+        s.strokeJoin(s.ROUND)      # Round the stroke corners
+        s.rect(40, 25, 70, 70)
+        s.strokeJoin(s.BEVEL)      # Bevel the stroke corners
+        s.rect(140, 25, 70, 70)
+        s.strokeCap(s.SQUARE)      # Square the line endings
+        s.line(270, 25, 340, 95)
+        s.strokeCap(s.ROUND)       # Round the line endings
+        s.line(350, 25, 420, 95)
+        s.noLoop()
+
+@add_sketch
+class grays:
+    title = None
+
+    def setup(s):
+        s.createCanvas(480, 120)
+        s.background(0)                # Black
+        s.fill(204)                    # Light gray
+        s.ellipse(132, 82, 200, 200)   # Light gray circle
+        s.fill(153)                    # Medium gray
+        s.ellipse(228, -16, 200, 200)  # Medium gray circle
+        s.fill(102)                    # Dark gray
+        s.ellipse(268, 118, 200, 200)  # Dark gray circle
+        s.noLoop()
+
+@add_sketch
+class noFill:
+    title = 'noFill and noStroke'
+
+    def setup(s):
+        s.createCanvas(480, 120)
+        s.background(204)
+        s.fill(153)                    # Medium gray
+        s.ellipse(132, 82, 200, 200)   # Gray circle
+        s.noFill()                     # Turn off fill
+        s.ellipse(228, -16, 200, 200)  # Outline circle
+        s.noStroke()                   # Turn off stroke
+        s.ellipse(268, 118, 200, 200)  # Doesn’t draw!
+        s.noLoop()
+
+@add_sketch
+class color:
+    title = None
+
+    def setup(s):
+        s.createCanvas(480, 120)
+        s.background(40, 50, 100)        # Dark blue color
+        s.fill(255, 0, 0)              # Red color
+        s.ellipse(132, 82, 200, 200)   # Red circle
+        s.fill(0, 255, 0)              # Green color
+        s.ellipse(228, -16, 200, 200)  # Green circle
+        s.fill(0, 0, 255)              # Blue color
+        s.ellipse(268, 118, 200, 200)  # Blue circle
+        s.noLoop()
+
+@add_sketch
+class transparency:
+    title = None
+
+    def setup(s):
+        s.createCanvas(480, 120)
+        s.noStroke()
+        s.background(204, 226, 225)    # Light blue color
+        s.fill(255, 0, 0, 160)         # Red color
+        s.ellipse(132, 82, 200, 200)   # Red circle
+        s.fill(0, 255, 0, 160)         # Green color
+        s.ellipse(228, -16, 200, 200)  # Green circle
+        s.fill(0, 0, 255, 160)         # Blue color
+        s.ellipse(268, 118, 200, 200)  # Blue circle
+        s.noLoop()
+
+@add_sketch
+class arrow:
+    title = None
+
+    def setup(s):
+        s.createCanvas(480, 120)
+        s.background(204)
+        s.beginShape()
+        s.vertex(180, 82)
+        s.vertex(207, 36)
+        s.vertex(214, 63)
+        s.vertex(407, 11)
+        s.vertex(412, 30)
+        s.vertex(219, 82)
+        s.vertex(226, 109)
+        s.endShape(s.CLOSE)
+        s.noLoop()
+
+@add_sketch
+class creatures:
+    title = None
+
+    def setup(s):
+        s.createCanvas(480, 120)
+        s.background(204)
+        # Left creature
+        s.fill(255)
+        s.beginShape()
+        s.vertex(50, 120)
+        s.vertex(100, 90)
+        s.vertex(110, 60)
+        s.vertex(80, 20)
+        s.vertex(210, 60)
+        s.vertex(160, 80)
+        s.vertex(200, 90)
+        s.vertex(140, 100)
+        s.vertex(130, 120)
+        s.endShape()
+        s.fill(0)
+        s.ellipse(155, 60, 8, 8)
+
+        # Right creature
+        s.fill(255)
+        s.beginShape()
+        s.vertex(370, 120)
+        s.vertex(360, 90)
+        s.vertex(290, 80)
+        s.vertex(340, 70)
+        s.vertex(280, 50)
+        s.vertex(420, 10)
+        s.vertex(390, 50)
+        s.vertex(410, 90)
+        s.vertex(460, 120)
+        s.endShape()
+        s.fill(0)
+        s.ellipse(345, 50, 10, 10)
+        s.noLoop()
+
+@add_sketch
+class robot:
+    title = None
+
+    def setup(s):
+        s.createCanvas(720, 480)
+        s.background(204)
+        s.strokeWeight(2)
+        s.ellipseMode(s.RADIUS)
+
+        # Neck
+        s.stroke(102)                # Set stroke to gray
+        s.line(266, 257, 266, 162)   # Left
+        s.line(276, 257, 276, 162)   # Middle
+        s.line(286, 257, 286, 162)   # Right
+
+        # Antennae
+        s.line(276, 155, 246, 112)   # Small
+        s.line(276, 155, 306, 56)    # Tall
+        s.line(276, 155, 342, 170)   # Medium
+
+        # Body
+        s.noStroke()                 # Disable stroke
+        s.fill(102)                  # Set fill to gray
+        s.ellipse(264, 377, 33, 33)  # Antigravity orb
+        s.fill(0)                    # Set fill to black
+        s.rect(219, 257, 90, 120)    # Main body
+        s.fill(102)                  # Set fill to gray
+        s.rect(219, 274, 90, 6)      # Gray stripe
+
+        # Head
+        s.fill(0)                    # Set fill to black
+        s.ellipse(276, 155, 45, 45)  # Head
+        s.fill(255)                  # Set fill to white
+        s.ellipse(288, 150, 14, 14)  # Large eye
+        s.fill(0)                    # Set fill to black
+        s.ellipse(288, 150, 3, 3)    # Pupil
+        s.fill(153)                  # Set fill to light gray
+        s.ellipse(263, 148, 5, 5)    # Small eye 1
+        s.ellipse(296, 130, 4, 4)    # Small eye 2
+        s.ellipse(305, 162, 3, 3)    # Small eye 3
+        s.noLoop()
