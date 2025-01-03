@@ -67,7 +67,7 @@ triangle
 vertex
 """.strip().splitlines()
 
-def init(var, id):
+def init(var, selector=None):
     locals = sys._getframe(1).f_locals
 
     def callback(instance):
@@ -81,5 +81,11 @@ def init(var, id):
             if name in locals:
                 setattr(instance, name, locals[name])
 
-    return js.p5.new(callback, document.getElementById(id))
+    if selector:
+        element = document.querySelector(selector)
+    else:
+        element = document.createElement('div')
+        document.body.appendChild(element)
+
+    return js.p5.new(callback, element)
 

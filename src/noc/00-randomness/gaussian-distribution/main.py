@@ -1,5 +1,5 @@
 import random
-import q5
+import p5
 
 def setup():
     createCanvas(640, 240)
@@ -11,4 +11,4 @@ def draw():
     fill(0, 10)
     circle(x, 120, 16)
 
-q5.init(var='s', id='sketch')
+p5.init(var='s')

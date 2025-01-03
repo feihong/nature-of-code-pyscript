@@ -1,6 +1,6 @@
 import sys
 import js
-import pyscript
+from pyscript import document
 
 # These functions should be attached to the q5 instance
 _instance_functions = """
@@ -65,9 +65,15 @@ triangle
 vertex
 """.strip().splitlines()
 
-def init(var, id):
+def init(var, selector=None):
+    if selector:
+        element = document.querySelector(selector)
+    else:
+        element = document.createElement('div')
+        document.body.appendChild(element)
+
     locals = sys._getframe(1).f_locals
-    instance = js.Q5.new('instance', pyscript.document.getElementById(id))
+    instance = js.Q5.new('instance', element)
 
     # Assign value of instance to variable in parent frame
     locals[var] = instance

@@ -1,5 +1,5 @@
 import random
-import q5
+import p5
 
 class Walker:
     def __init__(self):
@@ -33,4 +33,4 @@ def draw():
     walker.step()
     walker.show()
 
-q5.init(var='s', id='sketch')
+p5.init(var='s')

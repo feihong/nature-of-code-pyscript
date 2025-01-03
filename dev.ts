@@ -18,6 +18,7 @@ app.get('/', async (c) => {
 const py2jsMap = {
   '/static/q5.py': 'https://q5js.org/q5.js',
   '/static/p5.py': 'https://cdn.jsdelivr.net/npm/p5@1.11.2/lib/p5.min.js',
+  '/static/p5i.py': 'https://cdn.jsdelivr.net/npm/p5@1.11.2/lib/p5.min.js',
 }
 
 app.get('/:path{.+/}', async (c) => {
@@ -41,9 +42,7 @@ app.get('/:path{.+/}', async (c) => {
       .map(f => `<script src="${py2jsMap[f]}"></script>`)
       .join('\n')
     const head = pyscript + scripts
-    const body1 = `<script type="py" src="./main.py" config="./config.json"></script>
-      <div id="sketch"></div>`
-    const body = body1 + (config.desc ? `<p>${config.desc}</p>` : '')
+    const body = '<script type="py" src="./main.py" config="./config.json"></script>'
     return c.html(getHtml(config.name, head, body))
   }
 })
@@ -81,10 +80,8 @@ function getHtml(title : string, head : string, body : string) : string {
   ${head}
 </head>
 <body>
-  <main>
-    <h1>${title}</h1>
-    ${body}
-  </main>
+  <h1>${title}</h1>
+  ${body}
 </body>
 </html>`
 }

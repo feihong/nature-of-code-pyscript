@@ -1,5 +1,5 @@
 import random
-import q5
+import p5
 
 total = 20
 random_counts = [0 for _ in range(total)]
@@ -21,4 +21,4 @@ def draw():
         h = random_counts[i]
         rect(i * w, s.height - h, w - 1, h)
 
-q5.init(var='s', id='sketch')
+p5.init(var='s')
