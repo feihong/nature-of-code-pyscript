@@ -1,4 +1,5 @@
 import sys
+import contextlib
 from pyscript import document, ffi
 import js
 
@@ -42,16 +43,21 @@ ellipse
 ellipseMode
 endShape
 fill
+floor
 line
 loop
+millis
 noFill
+noise
 noLoop
 noStroke
 point
 quad
 radians
+randomSeed
 rect
 resizeCanvas
+rotate
 stroke
 strokeCap
 strokeJoin
@@ -59,6 +65,7 @@ strokeWeight
 text
 textAlign
 textSize
+translate
 triangle
 vertex
 """.strip().splitlines()
@@ -91,33 +98,44 @@ window._p5Instance = new p5(sketch => {
 })
 """)
 
-for name in _inject_values:
-    vars()[name] = getattr(js._p5Instance, name)
+_element = None  # parent element of p5 canvas
+_instance = js._p5Instance
 
-_p5_element = None
+for name in _inject_values:
+    vars()[name] = getattr(_instance, name)
 
 def createCanvas(*args):
-    canvas = js._p5Instance.createCanvas(*args)
-    canvas.parent(_p5_element)
+    canvas = _instance.createCanvas(*args)
+    canvas.parent(_element)
     canvas.show() # have to show it explicitly because it's initially hidden
 
+@contextlib.contextmanager
+def push():
+    _instance.push()
+    yield None
+    _instance.pop()
+
+# Renamed functions:
+remap = _instance.map
+randomUniform = _instance.random
+
 def get_instance():
-    return js._p5Instance
+    return _instance
 
 def init(selector=None):
-    global _p5_element
+    global _element
 
     if selector:
-        _p5_element = document.querySelector(selector)
+        _element = document.querySelector(selector)
     else:
-        _p5_element = document.createElement('div')
-        document.body.appendChild(_p5_element)
+        _element = document.createElement('div')
+        document.body.appendChild(_element)
 
     locals = sys._getframe(1).f_locals
 
     for name in _instance_functions:
         if name in locals:
-            setattr(js._p5Instance, name, locals[name])
+            setattr(_instance, name, locals[name])
 
     draw_functions = [locals[name] for name in ('preload', 'setup', 'draw') if name in locals]
-    js._p5Instance._init(ffi.to_js(draw_functions))
+    _instance._init(ffi.to_js(draw_functions))

@@ -2,19 +2,21 @@
 
 ## Todo
 
-- Migrate existing examples to p5
-- Reorganize folders
 - Rename to creative-pyscript
 - Generate static site
 - Add deploy script
+- Implement hot reloading
+- New p5 module:
+  - Migrate JS parts to Python
+  - Add flow-field following example: https://natureofcode.com/autonomous-agents/#example-54-flow-field-following
 
 # Books to draw examples from
 
 - [Learn Python Visually](https://github.com/tabreturn/processing.py-book)
 - [Math Adventures with Python](https://github.com/hackingmath/Math-Adventures/)
+- [Python Playground](https://nostarch.com/python-playground-2nd-edition)
 - [Generative Art with JavaScript and SVG](https://davidmatthew.ie/generative-art-javascript-svg/)
 - [Getting Started with P5.js](https://learning.oreilly.com/library/view/getting-started-with/9781457186769/)
-- [Python Playground](https://nostarch.com/python-playground-2nd-edition)
 - [Geometric Patterns with Creative Coding](https://github.com/Apress/Geometric-Patterns-with-Creative-Coding)
 - [Coding Art](https://github.com/codingart-book/examples)
 - [Playing with Chaos](https://github.com/growlybear/chaos)
@@ -34,3 +36,4 @@
 ## Links
 
 - https://github.com/pyscript/pyscript/blob/main/core/src/stdlib/pyscript/web.py
+- https://p5.readthedocs.io/en/latest/guides/for-processing-users.html
