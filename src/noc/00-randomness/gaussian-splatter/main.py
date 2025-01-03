@@ -1,7 +1,8 @@
 import random
 import math
 from pyscript.web import page, p
-import p5
+from p5 import *
+s = get_instance()
 
 def setup():
     createCanvas(400, 400)
@@ -18,6 +19,6 @@ def draw():
 def mousePressed(_event):
     background(255)
 
-p5.init(var='s')
+init()
 
 page.append(p('Exercise 0.4: Consider a simulation of paint splatter drawn as a collection of colored dots. Most of the paint clusters around a central position, but some dots splatter out toward the edges. Can you use a normal distribution of random numbers to generate the positions of the dots? Can you also use a normal distribution of random numbers to generate a color palette? Try creating a slider to adjust the standard deviation.'))

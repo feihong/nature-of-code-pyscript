@@ -1,5 +1,6 @@
 import random
-import p5
+from p5 import *
+s = get_instance()
 
 total = 20
 random_counts = [0 for _ in range(total)]
@@ -21,4 +22,4 @@ def draw():
         h = random_counts[i]
         rect(i * w, s.height - h, w - 1, h)
 
-p5.init(var='s')
+init()

@@ -1,5 +1,6 @@
 import random
-import p5
+from p5 import *
+s = get_instance()
 
 def setup():
     createCanvas(640, 240)
@@ -11,4 +12,4 @@ def draw():
     fill(0, 10)
     circle(x, 120, 16)
 
-p5.init(var='s')
+init()

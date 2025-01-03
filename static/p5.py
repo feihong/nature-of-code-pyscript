@@ -1,17 +1,14 @@
 import sys
-from pyscript import document
+from pyscript import document, ffi
 import js
 
 # These functions should be attached to the instance
 _instance_functions = """
-draw
 mousePressed
-preload
-setup
 """.strip().splitlines()
 
-# These functions will be injected into the parent frame
-_inject_functions = """
+# These values will be copied into this module
+_inject_values = """
 BASELINE
 BEVEL
 BOTTOM
@@ -41,7 +38,6 @@ background
 beginShape
 circle
 colorMode
-createCanvas
 ellipse
 ellipseMode
 endShape
@@ -67,25 +63,61 @@ triangle
 vertex
 """.strip().splitlines()
 
-def init(var, selector=None):
-    locals = sys._getframe(1).f_locals
+js.eval("""
+window._p5Instance = new p5(sketch => {
+  sketch.setup = () => {
+    const canvas = sketch.createCanvas()
+    canvas.hide()
+    sketch.noLoop()
+  }
 
-    def callback(instance):
-        # Assign value of instance to variable in parent frame
-        locals[var] = instance
+  sketch._init = (drawFunctions) => {
+    const drawAll = () => {
+      if (drawFunctions.length > 1) {
+        sketch.draw = () => {
+          const fn = drawFunctions.shift()
+          fn()
+          sketch.noLoop()
+        }
+        sketch.loop()
+        setInterval(drawAll, 0)
+      } else {
+        sketch.draw = drawFunctions[0]
+        sketch.loop()
+      }
+    }
+    drawAll()
+  }
+})
+""")
 
-        for name in _inject_functions:
-            locals[name] = getattr(instance, name)
+for name in _inject_values:
+    vars()[name] = getattr(js._p5Instance, name)
 
-        for name in _instance_functions:
-            if name in locals:
-                setattr(instance, name, locals[name])
+_p5_element = None
+
+def createCanvas(*args):
+    canvas = js._p5Instance.createCanvas(*args)
+    canvas.parent(_p5_element)
+    canvas.show() # have to show it explicitly because it's initially hidden
+
+def get_instance():
+    return js._p5Instance
+
+def init(selector=None):
+    global _p5_element
 
     if selector:
-        element = document.querySelector(selector)
+        _p5_element = document.querySelector(selector)
     else:
-        element = document.createElement('div')
-        document.body.appendChild(element)
+        _p5_element = document.createElement('div')
+        document.body.appendChild(_p5_element)
 
-    return js.p5.new(callback, element)
+    locals = sys._getframe(1).f_locals
 
+    for name in _instance_functions:
+        if name in locals:
+            setattr(js._p5Instance, name, locals[name])
+
+    draw_functions = [locals[name] for name in ('preload', 'setup', 'draw') if name in locals]
+    js._p5Instance._init(ffi.to_js(draw_functions))
