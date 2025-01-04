@@ -1,10 +1,11 @@
 import sys
-import contextlib
+from contextlib import contextmanager
 from pyscript import document, ffi
 import js
 
 # These functions should be attached to the instance
 _instance_functions = """
+keyPressed
 mousePressed
 """.strip().splitlines()
 
@@ -14,6 +15,7 @@ BASELINE
 BEVEL
 BOTTOM
 CENTER
+CHORD
 CLOSE
 CORNER
 CORNERS
@@ -23,6 +25,7 @@ HSB
 HSL
 LEFT
 MITER
+OPEN
 PI
 QUARTER_PI
 RADIANS
@@ -33,20 +36,26 @@ ROUND
 SQUARE
 TOP
 TWO_PI
+alpha
 angleMode
 arc
 background
-beginShape
+blue
 circle
+color
 colorMode
+cos
+curve
 ellipse
 ellipseMode
-endShape
 fill
 floor
+green
+hour
 line
 loop
 millis
+minute
 noFill
 noise
 noLoop
@@ -56,8 +65,12 @@ quad
 radians
 randomSeed
 rect
+red
 resizeCanvas
 rotate
+save
+second
+sin
 stroke
 strokeCap
 strokeJoin
@@ -109,11 +122,25 @@ def createCanvas(*args):
     canvas.parent(_element)
     canvas.show() # have to show it explicitly because it's initially hidden
 
-@contextlib.contextmanager
+# Context manager functions:
+
+@contextmanager
 def push():
     _instance.push()
     yield None
     _instance.pop()
+
+@contextmanager
+def contour():
+    _instance.beginContour()
+    yield None
+    _instance.endContour()
+
+@contextmanager
+def shape(closed=False):
+    _instance.beginShape()
+    yield None
+    _instance.endShape(_instance.CLOSE) if closed else _instance.endShape()
 
 # Renamed functions:
 remap = _instance.map

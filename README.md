@@ -8,7 +8,8 @@
 - Implement hot reloading
 - New p5 module:
   - Migrate JS parts to Python
-  - Add flow-field following example: https://natureofcode.com/autonomous-agents/#example-54-flow-field-following
+- Add digital aquatics example: https://github.com/tabreturn/processing.py-book/tree/master/miscellaneous/digital_aquatics
+- Add flow-field following example: https://natureofcode.com/autonomous-agents/#example-54-flow-field-following
 
 # Books to draw examples from
 
