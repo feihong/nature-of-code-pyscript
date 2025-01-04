@@ -41,10 +41,13 @@ angleMode
 arc
 background
 blue
+ceil
 circle
 color
 colorMode
+constrain
 cos
+createVector
 curve
 ellipse
 ellipseMode
@@ -58,6 +61,7 @@ millis
 minute
 noFill
 noise
+noiseSeed
 noLoop
 noStroke
 point
@@ -140,11 +144,20 @@ def contour():
 def shape(closed=False):
     _instance.beginShape()
     yield None
-    _instance.endShape(_instance.CLOSE) if closed else _instance.endShape()
+    _instance.endShape()
+
+@contextmanager
+def closedShape():
+    _instance.beginShape()
+    yield None
+    _instance.endShape(_instance.CLOSE)
 
 # Renamed functions:
 remap = _instance.map
 randomUniform = _instance.random
+
+# Classes:
+Vector = js.p5.Vector
 
 def get_instance():
     return _instance

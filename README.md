@@ -8,8 +8,7 @@
 - Implement hot reloading
 - New p5 module:
   - Migrate JS parts to Python
-- Add digital aquatics example: https://github.com/tabreturn/processing.py-book/tree/master/miscellaneous/digital_aquatics
-- Add flow-field following example: https://natureofcode.com/autonomous-agents/#example-54-flow-field-following
+- Add turtle library that outputs SVG
 
 # Books to draw examples from
 
@@ -23,7 +22,7 @@
 - [Playing with Chaos](https://github.com/growlybear/chaos)
 - [Patt Vira YouTube channel](https://www.youtube.com/@pattvira)
 - [The Coding Train YouTube channel](https://www.youtube.com/@TheCodingTrain)
-- [Nature of Code](https://natureofcode.com/)
+- [The Nature of Code](https://natureofcode.com/)
 - [Beginners Guide to Machine Learning in JavaScript](https://thecodingtrain.com/tracks/ml5js-beginners-guide/ml5/0-introduction/0-trailer)
 - [Code the Classics Volumes I and II](https://magpi.raspberrypi.com/books/code-the-classics-vol-I-2ed)
 - [Invent Your Own Computer Games with Python, 4th edition](https://inventwithpython.com/invent4thed/)

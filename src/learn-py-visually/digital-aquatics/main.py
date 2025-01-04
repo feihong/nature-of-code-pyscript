@@ -205,7 +205,7 @@ class Aquatic:
         fill(self.r, self.g, self.b, 120)
         stroke(self.r/2, self.g/2, self.b/2, 220)
         strokeWeight(self.s/12)
-        with shape(True):
+        with closedShape():
             self.superShape(bm, n1, n2, bn3, ba, bb, self.s, .5, TWO_PI-.5)
             # mouth
             self.superShape(bm, .98, 3, bn3, ma, mb, mradius, PI+HALF_PI, HALF_PI,
@@ -228,7 +228,7 @@ class Aquatic:
         # background-colored mask
         fill(self.bg)
         noStroke()
-        with shape(True):
+        with closedShape():
             vertex(-s.width*2, -s.height*2)
             vertex(-s.width*2, s.height*4)
             vertex(s.width*4, s.height*4)
