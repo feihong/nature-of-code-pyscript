@@ -27,6 +27,8 @@
 - [Code the Classics Volumes I and II](https://magpi.raspberrypi.com/books/code-the-classics-vol-I-2ed)
 - [Invent Your Own Computer Games with Python, 4th edition](https://inventwithpython.com/invent4thed/)
 - [Turtle Geometry](https://direct.mit.edu/books/oa-monograph/4663/Turtle-GeometryThe-Computer-as-a-Medium-for)
+- [Mazes for Programmers](https://pragprog.com/titles/jbmaze/mazes-for-programmers/)
+- [The Ray Tracer Challenge](https://pragprog.com/titles/jbtracer/the-ray-tracer-challenge/)
 - [A Generative SVG Starter Kit](https://dev.to/georgedoescode/a-generative-svg-starter-kit-5cm1)
 - [Mathematics for Game Programming and Computer Graphics](https://github.com/PacktPublishing/Mathematics-for-Game-Programming-and-Computer-Graphics)
 - [Learn Physics with Functional Programming](https://nostarch.com/learn-physics-functional-programming)

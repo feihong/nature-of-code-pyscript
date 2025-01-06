@@ -18,6 +18,7 @@ app.get('/', async (c) => {
 const py2jsMap = {
   '/static/q5.py': 'https://q5js.org/q5.js',
   '/static/p5.py': 'https://cdn.jsdelivr.net/npm/p5@1.11.2/lib/p5.min.js',
+  '/static/ml5.py': 'https://unpkg.com/ml5@1/dist/ml5.min.js',
   '/static/p5i.py': 'https://cdn.jsdelivr.net/npm/p5@1.11.2/lib/p5.min.js',
 }
 

@@ -11,6 +11,7 @@ mousePressed
 
 # These values will be copied into this module
 _inject_values = """
+AUDIO
 BASELINE
 BEVEL
 BOTTOM
@@ -36,9 +37,12 @@ ROUND
 SQUARE
 TOP
 TWO_PI
+VIDEO
 alpha
 angleMode
 arc
+atan
+atan2
 background
 blue
 ceil
@@ -49,12 +53,14 @@ constrain
 cos
 createVector
 curve
+dist
 ellipse
 ellipseMode
 fill
 floor
 green
 hour
+image
 line
 loop
 millis
@@ -73,6 +79,7 @@ red
 resizeCanvas
 rotate
 save
+scale
 second
 sin
 stroke
@@ -121,10 +128,15 @@ _instance = js._p5Instance
 for name in _inject_values:
     vars()[name] = getattr(_instance, name)
 
+# Modified functions:
+
 def createCanvas(*args):
     canvas = _instance.createCanvas(*args)
     canvas.parent(_element)
     canvas.show() # have to show it explicitly because it's initially hidden
+
+def createCapture(type_, flipped=False):
+    return _instance.createCapture(type_, ffi.to_js({'flipped': flipped}))
 
 # Context manager functions:
 
