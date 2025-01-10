@@ -1,7 +1,7 @@
 import random
 from pyscript import window, when
 from pyscript.web import div
-from sv import add_sketch, add_class_sketch, svg, circle, rect, ellipse
+from sv import add_sketch, Sketch, svg, circle, rect, ellipse
 
 @add_sketch('Hilma af Klint-inspired Composition')
 def hilma():
@@ -12,8 +12,7 @@ def hilma():
         circle(r=50, cy=250, cx=250, fill='#d6a946'),
     ])
 
-@add_class_sketch
-class First:
+class First(Sketch):
     title = 'Our first generative sketch'
 
     def __init__(self):

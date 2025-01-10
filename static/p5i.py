@@ -21,23 +21,30 @@ setup
 draw
 """.strip().splitlines()
 
-def add_sketch(cls):
-    if hasattr(cls, 'title'):
-        title = cls.title if cls.title is not None else cls.__name__
-        h2 = document.createElement('h2')
-        h2.textContent = title
-        document.body.appendChild(h2)
+class SketchMetaclass(type):
+    def __new__(cls, clsname, bases, attrs):
+        new_class = super().__new__(cls, clsname, bases, attrs)
 
-    if selector := getattr(cls, 'selector', None):
-        element = document.querySelector(selector)
-    else:
-        element = document.createElement('div')
-        document.body.appendChild(element)
+        if 'setup' in attrs:
+            title = attrs['title'] if 'title' in attrs else clsname
+            h2 = document.createElement('h2')
+            h2.textContent = title
+            document.body.appendChild(h2)
 
-    instance_funcs = {}
-    for name in _instance_functions:
-        if fn := getattr(cls, name, None):
-            instance_funcs[name] = fn
+            if selector := attrs.get('selector'):
+                element = document.querySelector(selector)
+            else:
+                element = document.createElement('div')
+                document.body.appendChild(element)
 
-    _p5_instance = js._createP5Instance(ffi.to_js(instance_funcs), element)
-    return cls
+            instance_funcs = {}
+            for name in _instance_functions:
+                if fn := attrs.get(name):
+                    instance_funcs[name] = fn
+
+            _p5_instance = js._createP5Instance(ffi.to_js(instance_funcs), element)
+
+        return new_class
+
+class Sketch(object, metaclass=SketchMetaclass):
+    pass

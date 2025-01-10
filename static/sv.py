@@ -116,8 +116,17 @@ def add_sketch(title, selector=None):
 
     return decorator
 
-def add_class_sketch(cls):
-    element = page.find(cls.selector)[0] if hasattr(cls, 'selector') else page
-    sketch = cls()
-    element.append(h2(cls.title), sketch.render())
-    return cls
+class SketchMetaclass(type):
+    def __new__(cls, clsname, bases, attrs):
+        new_class = super().__new__(cls, clsname, bases, attrs)
+
+        if 'render' in attrs:
+            element = page.find(attrs['selector'])[0] if 'selector' in attrs else page
+            title = attrs['title'] if 'title' in attrs else clsname
+            sketch = new_class()
+            element.append(h2(title), sketch.render())
+
+        return new_class
+
+class Sketch(object, metaclass=SketchMetaclass):
+   pass

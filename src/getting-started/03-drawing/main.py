@@ -1,10 +1,6 @@
-from pyscript.web import page, h2, div
-from p5i import add_sketch
+from p5i import Sketch
 
-@add_sketch
-class line:
-    title = None
-
+class line(Sketch):
     def setup(s):
         s.createCanvas(480, 120)
         s.background(204)
@@ -13,8 +9,7 @@ class line:
         s.line(20, 50, 420, 110)
         s.noLoop()
 
-@add_sketch
-class shapes:
+class shapes(Sketch):
     title = 'quad and triangle'
 
     def setup(s):
@@ -25,20 +20,14 @@ class shapes:
         s.triangle(158, 55, 290, 91, 290, 112)
         s.noLoop()
 
-@add_sketch
-class rect:
-    title = None
-
+class rect(Sketch):
     def setup(s):
         s.createCanvas(480, 120)
         s.background(204)
         s.rect(180, 60, 220, 40)
         s.noLoop()
 
-@add_sketch
-class ellipse:
-    title = None
-
+class ellipse(Sketch):
     def setup(s):
         s.createCanvas(480, 120)
         s.background(204)
@@ -47,10 +36,7 @@ class ellipse:
         s.ellipse(412, 60, 18, 18)
         s.noLoop()
 
-@add_sketch
-class arc:
-    title = None
-
+class arc(Sketch):
     def setup(s):
         s.createCanvas(480, 120)
         s.background(204)
@@ -60,10 +46,7 @@ class arc:
         s.arc(390, 60, 80, 80, s.QUARTER_PI, s.PI + s.QUARTER_PI)
         s.noLoop()
 
-@add_sketch
-class angleMode:
-    title = None
-
+class angleMode(Sketch):
     def setup(s):
         s.createCanvas(480, 120)
         s.background(204)
@@ -74,10 +57,7 @@ class angleMode:
         s.arc(390, 60, 80, 80, 45, 225)
         s.noLoop()
 
-@add_sketch
-class strokeWeight:
-    title = None
-
+class strokeWeight(Sketch):
     def setup(s):
         s.createCanvas(480, 120)
         s.background(204)
@@ -89,8 +69,7 @@ class strokeWeight:
         s.ellipse(389, 60, 90, 90)
         s.noLoop()
 
-@add_sketch
-class strokeJoin:
+class strokeJoin(Sketch):
     title = 'strokeJoin and strokeCap'
 
     def setup(s):
@@ -107,10 +86,7 @@ class strokeJoin:
         s.line(350, 25, 420, 95)
         s.noLoop()
 
-@add_sketch
-class grays:
-    title = None
-
+class grays(Sketch):
     def setup(s):
         s.createCanvas(480, 120)
         s.background(0)                # Black
@@ -122,8 +98,7 @@ class grays:
         s.ellipse(268, 118, 200, 200)  # Dark gray circle
         s.noLoop()
 
-@add_sketch
-class noFill:
+class noFill(Sketch):
     title = 'noFill and noStroke'
 
     def setup(s):
@@ -137,10 +112,7 @@ class noFill:
         s.ellipse(268, 118, 200, 200)  # Doesn’t draw!
         s.noLoop()
 
-@add_sketch
-class color:
-    title = None
-
+class color(Sketch):
     def setup(s):
         s.createCanvas(480, 120)
         s.background(40, 50, 100)        # Dark blue color
@@ -152,10 +124,7 @@ class color:
         s.ellipse(268, 118, 200, 200)  # Blue circle
         s.noLoop()
 
-@add_sketch
-class transparency:
-    title = None
-
+class transparency(Sketch):
     def setup(s):
         s.createCanvas(480, 120)
         s.noStroke()
@@ -168,10 +137,7 @@ class transparency:
         s.ellipse(268, 118, 200, 200)  # Blue circle
         s.noLoop()
 
-@add_sketch
-class arrow:
-    title = None
-
+class arrow(Sketch):
     def setup(s):
         s.createCanvas(480, 120)
         s.background(204)
@@ -186,10 +152,7 @@ class arrow:
         s.endShape(s.CLOSE)
         s.noLoop()
 
-@add_sketch
-class creatures:
-    title = None
-
+class creatures(Sketch):
     def setup(s):
         s.createCanvas(480, 120)
         s.background(204)
@@ -226,10 +189,7 @@ class creatures:
         s.ellipse(345, 50, 10, 10)
         s.noLoop()
 
-@add_sketch
-class robot:
-    title = None
-
+class robot(Sketch):
     def setup(s):
         s.createCanvas(720, 480)
         s.background(204)
